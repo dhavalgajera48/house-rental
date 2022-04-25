@@ -1,37 +1,60 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import googleIcon from '../assets/svg/googleIcon.svg'
+import homeSweetHomeIcon from '../assets/jpg/homeSweetHome.jpg'
+import { NavLink } from 'react-router-dom'
+import {getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { toast } from 'react-toastify'
 
 function SignIn() {
+  const navigate = useNavigate()
 
-    const [formData, setFormData] = useState({
-      email: '',
-      password: ''
-    })
-  const {email, password} = formData
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+  const { email, password } = formData
 
-    const onChange = (e) => {
-        setFormData((prevState) => ({
-          ...prevState,
-          [e.target.id] : e.target.value
-        }))
-    }
-  const handleFormSubmit = (e) => {
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value
+    }))
+  }
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    let email = e.target.elements.email?.value;
-    let password = e.target.elements.password?.value;
-
-    console.log(email, password);
+    try{
+      const auth = getAuth()
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      
+      if(userCredential.user){
+        navigate('/')
+        toast.success('User Sign In Successfully!', {autoClose:3000})
+      }
+    }catch(error){
+      // console.log(error);
+      toast.error('Invalid User Credentials!')
+    }
   };
 
   return (
-    <section className="flex flex-col md:flex-row h-screen items-center">
+    <section className="flex mt-16 flex-col md:flex-row h-screen items-center">
 
       <div className="bg-white hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
-        {/* <img src="https://source.unsplash.com/random" alt="" className="w-full h-full object-cover" /> */}
-
+        <div className='mx-20 my-20 justify-center'>
+          <img src={homeSweetHomeIcon} alt="" className="mx-auto" />
+          <p className="mx-auto text-center font-bold">Login to your account to unlock below benefits</p>
+          <div className="divider divider-vertical h-fit"></div>
+          <ul className="list-none list-outside text-center">
+            <li>Get latest updates about Properties and Projects.</li>
+            <li>Access millions of advertiser details in one click.</li>
+            <li>Get market information, reports and price trends.</li>
+            <li>Advertise your property for free!</li>
+          </ul>
+        </div>
       </div>
-
+      <div className="divider divider-horizontal h-screen"></div>
       <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
         flex items-center justify-center">
 
@@ -40,26 +63,26 @@ function SignIn() {
 
           <h1 className="text-xl md:text-2xl font-bold leading-tight mt-2">Log in to your account</h1>
 
-          <form className="mt-6" action="#" method="POST">
-            <div>
+          <form className="mt-6" onSubmit={onSubmit}>
+            <div className="mt-4">
               <label className="block text-gray-700">Email Address</label>
               <input type="email" name="email" id="email"
-                placeholder="Enter Email Address" onChange = {onChange}
+                placeholder="Enter Email Address" onChange={onChange}
                 className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus autoComplete="true" required />
             </div>
 
             <div className="mt-4">
               <label className="block text-gray-700">Password</label>
               <input type="password" name="password" id="password" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
-                focus:bg-white focus:outline-none" onChange = {onChange} required />
+                focus:bg-white focus:outline-none" onChange={onChange} required />
             </div>
 
             <div className="text-right mt-2">
-              <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
+              <NavLink to="/forgot-password" className="text-sm font-semibold text-gray-900 hover:text-blue-700 focus:text-blue-700">Forgot Password?</NavLink>
             </div>
 
             <button type="submit" className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
-              px-4 py-3 mt-6" onClick={handleFormSubmit}>Log In</button>
+              px-4 py-3 mt-6">Log In</button>
           </form>
           <hr className="my-6 border-gray-300 w-full" />
 
@@ -73,8 +96,8 @@ function SignIn() {
             </div>
           </button>
 
-          <p className="mt-8">Need an account? <a href="#" className="text-blue-500 hover:text-blue-700 font-semibold">Create an
-            account</a></p>
+          <p className="mt-8">Need an Account? <NavLink exact="true" to='/signup' className="text-blue-500 hover:text-blue-700 font-semibold" >Create an
+            account</NavLink></p>
         </div></div>
     </section>
   )
