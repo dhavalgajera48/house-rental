@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import googleIcon from '../assets/svg/googleIcon.svg'
 import homeSweetHomeIcon from '../assets/jpg/homeSweetHome.jpg'
 import { NavLink } from 'react-router-dom'
 import {getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { toast } from 'react-toastify'
+import UserContext from '../context/UserContext'
 
 function SignIn() {
   const navigate = useNavigate()
+
+  const { dispatch } = useContext(UserContext)
+
 
   const [formData, setFormData] = useState({
     email: '',
@@ -29,6 +33,7 @@ function SignIn() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password)
       
       if(userCredential.user){
+        dispatch({type:'GET_USERS', payload:userCredential.user})
         navigate('/')
         toast.success('User Sign In Successfully!', {autoClose:3000})
       }
@@ -39,7 +44,7 @@ function SignIn() {
   };
 
   return (
-    <section className="flex mt-16 flex-col md:flex-row h-screen items-center">
+    <section className="flex mt-24 mb-8 flex-col md:flex-row h-screen items-center">
 
       <div className="bg-white hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
         <div className='mx-20 my-20 justify-center'>
@@ -56,9 +61,9 @@ function SignIn() {
       </div>
       <div className="divider divider-horizontal h-screen"></div>
       <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
-        flex items-center justify-center">
+        flex">
 
-        <div className="w-full h-100">
+        <div className="w-full h-auto">
 
 
           <h1 className="text-xl md:text-2xl font-bold leading-tight mt-2">Log in to your account</h1>
