@@ -39,7 +39,7 @@ function SignIn() {
       }
     }catch(error){
       // console.log(error);
-      toast.error('Invalid User Credentials!')
+      toast.error('Bad Credentials!')
     }
   };
 
