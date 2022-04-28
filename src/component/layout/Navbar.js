@@ -43,7 +43,7 @@ function Navbar() {
                     <ul className="menu menu-horizontal p-0 space-x-1">
                         <Link to='/profile' className="btn btn-ghost normal-case">{users.displayName ? users.displayName : users.email}</Link>
                         <button className="btn btn-ghost hover:btn-primary" onClick={onLogout}>Log Out</button>
-                        <li><Link to='/' onClick={onLogout} >Sign Out</Link></li>
+                        {/* <li><Link to='/' onClick={onLogout} >Sign Out</Link></li> */}
                     </ul>
 
                 ) : (
