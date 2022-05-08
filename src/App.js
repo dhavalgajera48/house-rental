@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Offer from "./pages/Offer";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import PrivateRoutes from "./component/layout/PrivateRoutes";
 
 import { ToastContainer, Zoom } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,17 +23,22 @@ function App() {
 
         <div className="flex flex-col justify-between h-screen">
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Explore />} />
-            <Route path="/offer" element={<Offer />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/notfound" element={<NotFound />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
+          <section className="flex mt-24 mb-8 flex-col px-4 md:flex-row items-center">
+            <Routes>
+              <Route path="/" element={<Explore />} />
+              <Route path="/offer" element={<Offer />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/about" element={<About />} />
+              <Route path='/profile' element={<PrivateRoutes />}>
+                <Route path="/profile" element={<Profile />} />
+
+              </Route>
+              <Route path="/notfound" element={<NotFound />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
+          </section>
           <Footer />
         </div>
 

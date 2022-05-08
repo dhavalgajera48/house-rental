@@ -44,8 +44,8 @@ function SignIn() {
   };
 
   return (
-    <section className="flex mt-24 mb-8 flex-col md:flex-row h-screen items-center">
-
+    // <section className="flex mt-24 mb-8 flex-col md:flex-row h-screen items-center">
+<>
       <div className="bg-white hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
         <div className='mx-20 my-20 justify-center'>
           <img src={homeSweetHomeIcon} alt="" className="mx-auto" />
@@ -104,7 +104,7 @@ function SignIn() {
           <p className="mt-8">Need an Account? <NavLink exact="true" to='/signup' className="text-blue-500 hover:text-blue-700 font-semibold" >Create an
             account</NavLink></p>
         </div></div>
-    </section>
+    </>
   )
 }
 
