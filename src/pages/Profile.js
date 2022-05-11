@@ -18,7 +18,7 @@ function Profile() {
 
 
   const { dispatch } = useContext(UserContext)
-  const [changeDetails, setChangeDetaails] = useState(false)
+  const [changeDetails, setChangeDetails] = useState(false)
 
   const onSubmit = async () => {
     // console.log("ON Submit Works");
@@ -70,7 +70,7 @@ function Profile() {
                 <div className="card-actions justify-end">
                   <button className="btn bg-white btn-outline" onClick={() => {
                     changeDetails && onSubmit()
-                    setChangeDetaails((prevState) => !prevState)
+                    setChangeDetails((prevState) => !prevState)
                   }}>
                     Update Profile
                   </button>
